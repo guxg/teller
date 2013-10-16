@@ -45,3 +45,8 @@ case class Account(id: Option[Long], organisationId: Option[Long], personId: Opt
   def balance: Money = Money.of(currency, 0)
 }
 
+case class AccountSummary(person: Option[Person], organisation: Option[Organisation]) extends AccountHolder {
+  def account: models.Account = ???
+  def name: String = ???
+
+}
