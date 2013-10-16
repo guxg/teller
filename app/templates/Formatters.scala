@@ -48,6 +48,10 @@ object Formatters {
     def format(pattern: String) = date.toString(pattern)
   }
 
+  implicit class RichMoney(money: Money) {
+    def format: Html = Html(money.getCurrencyUnit.getCode + "&nbsp;" + money.getAmount)
+  }
+
   implicit class RichString(val string: String) extends AnyVal {
 
     /**

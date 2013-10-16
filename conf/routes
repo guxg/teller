@@ -2,6 +2,7 @@ GET /        controllers.Dashboard.index
 GET /about   controllers.Dashboard.about
 GET /api     controllers.Dashboard.api
 
+
 GET  /organizations                 controllers.Organisations.index
 POST /organizations                 controllers.Organisations.create
 GET  /organization/new              controllers.Organisations.add
@@ -40,6 +41,10 @@ GET  /brand/:code/edit     controllers.Brands.edit(code)
 POST /brand/:code/delete   controllers.Brands.delete(code)
 
 POST /user    controllers.UserAccounts.update
+
+
+GET /bookings   controllers.BookingEntries.index
+
 
 GET /api/v1/licensees/:brandCode                    controllers.LicensesApi.licensees(brandCode: String, date: Option[String])
 GET /api/v1/licensee/:licenseeId/brand/:brandCode   controllers.LicensesApi.licensee(licenseeId: Long, brandCode: String)
