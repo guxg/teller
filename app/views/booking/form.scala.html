@@ -1,0 +1,107 @@
+@(user: securesocial.core.Identity)(implicit flash: Flash, token: play.filters.csrf.CSRF.Token)
+
+@import helper.CSRF
+@import views.ViewHelpers._
+
+@main("Add booking entry", Some(user)) {
+
+<h1>Add booking entry</h1>
+
+  <form class="form-horizontal">
+
+    <fieldset style="margin-bottom:1.5em">
+      <!--<legend>Payment details</legend>-->
+
+      <div class="control-group">
+        <label for="">Summary</label>
+        <div class="input">
+          <input class="input-xlarge" type="text" id="" name="" value="GoDaddy Inc.">
+          <span class="help-inline">Required</span>
+        </div>
+      </div>
+
+      <div class="control-group" id="fee">
+        <label for="fee">Amount</label>
+        <div class=" input ">
+        <select name="fee.currency">
+        <option value="USD">USD - US Dollar</option>
+        </select>
+        <input class="input-small" name="fee.amount" type="number" min="0" step="0.01" value="100.00"> ×
+        <div class="input-append">
+          <input class="input-mini" type="number" min="0" step="1.0" value="100" id="" name="" value=""><span class="add-on">%</span>
+        </div>
+        <span class="help-inline">Required</span>
+        </div>
+        <strong>USD 100.00</strong>
+      </div>
+
+      <div class="controls-row">
+        <label for="from">Accounts</label>
+        <select class="span3" id="from">
+          <option>Happy Melly One BV</option>
+        </select>
+        <div class="span2" style="text-align: center">
+          <!--<button class="btn btn-danger" type="button"><i class="icon-arrow-left icon-white"></i> Is Owed By</button>-->
+          <button class="btn btn-inverse" type="button">Owes To <i class="icon-arrow-right icon-white"></i></button>
+        </div>
+        <select class="span3">
+          <option>Happy Melly Brazil</option>
+        </select>
+      </div>
+
+      <div class="row">
+        <div class="span3" title="Exchange rate 0.756182 (USD to EUR) measured 02-09-2013">
+          <strong>EUR 75.62</strong> (credit)
+        </div>
+        <div class="span2">
+        </div>
+        <div class="span3" title="Exchange rate 2.38295 (USD to BRL) measured 02-09-2013">
+          <strong>BRL 238.30</strong> (debit)
+        </div>
+      </div>
+
+    </fieldset>
+
+  <fieldset>
+    <!--<legend>References</legend>-->
+
+    <div class="control-group">
+      <label for="">Reference number</label>
+      <div class="input">
+        <input type="text" id="" name="" value="96496987"> on date
+        <input class="input-small" type="date" id="" name="" value="2013-09-27">
+        <span class="help-inline">YYYY-MM-DD</span>
+      </div>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <!--<legend>Additional information</legend>-->
+
+    <div class="control-group">
+      <label for="brandId">Brand</label>
+      <div class="input">
+        <select id="brandId" name="brandId">
+          <option value="1">Management 3.0</option>
+        </select>
+        <span class="help-inline">Required</span>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="bio">Booking description</label>
+      <div class="input">
+        <textarea id="bio" name="bio" class="input-xxlarge" rows="5"> domain name registration  management30.com.br</textarea>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label for="">URL</label>
+      <div class="input">
+        <input class="input-xxlarge" type="text" id="" name="" value="http://www.godaddy.com/.....96496987.pdf">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Save</button>
+  </form>
+}

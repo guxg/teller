@@ -24,11 +24,19 @@
 
 package controllers
 
-import play.api.mvc.Controller
 import models.UserRole.Role._
 import models.BookingEntry
+import play.api.mvc.Controller
+import play.api.data.Forms._
+import play.api.data.Form
+import play.api.data.validation.Constraints._
 
 object BookingEntries extends Controller with Security {
+
+  def add = SecuredRestrictedAction(Editor) { implicit request ⇒
+    implicit handler ⇒
+      Ok(views.html.booking.form(request.user))
+  }
 
   def index = SecuredRestrictedAction(Viewer) { implicit request ⇒
     implicit handler ⇒

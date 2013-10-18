@@ -43,7 +43,8 @@ POST /brand/:code/delete   controllers.Brands.delete(code)
 POST /user    controllers.UserAccounts.update
 
 
-GET /bookings   controllers.BookingEntries.index
+GET /bookings       controllers.BookingEntries.index
+GET /booking/new    controllers.BookingEntries.add
 
 
 GET /api/v1/licensees/:brandCode                    controllers.LicensesApi.licensees(brandCode: String, date: Option[String])
