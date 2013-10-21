@@ -1,0 +1,56 @@
+@(user: securesocial.core.Identity, account: Account)(implicit request: Request[Any], flash: Flash, handler: AuthorisationHandler, token: play.filters.csrf.CSRF.Token)
+
+@import scala.collection.JavaConverters._
+@import org.joda.money.CurrencyUnit
+
+
+@main("Account details", Some(user)) {
+  <div class="span8">
+    <header>
+      <h1>Account for @account.accountHolder.name </h1>
+      @if(!account.active) {
+        <p><span class="label label-warning">This account is inactive</span></p>
+      }
+    </header>
+  </div>
+
+  <div class="span2">
+    <h3>Balance
+      <span class="@if(account.balance.isNegative){text-error} "><br>
+    @account.balance</span></h3>
+  </div>
+
+  <div class="span4 actions">
+    <h3>Enable account</h3>
+    <p>To enable this account, please select a currency.</p>
+      <form action="@if(account.active){
+          @routes.Accounts.disable(account.id.get)
+        } else {
+          @routes.Accounts.enable(account.id.get)
+        }">
+
+        <div class="control-group">
+          <label class="control-label" for="currency">Account currency</label>
+          <select name="currency" id="currency">
+          @for(currency <- CurrencyUnit.registeredCurrencies.asScala.filterNot(_.isPseudoCurrency)) {
+            <option value="@currency.getCode" @if(currency.getCode == "EUR") { selected }>@currency.getCode - @currency.toCurrency.getDisplayName</option>
+          }
+          </select>
+        </div>
+
+
+      @if(account.active) {
+        <button class="btn btn-warning" type="submit"
+        @if(account.balance.isZero){ disabled title="To deactivate this account, first bring the balance to zero." }>
+          <i class="icon-off icon-white"></i> Deactivate
+        </button>
+      } else {
+          <button class="btn btn-success" type="submit"><i class="icon-off icon-white"></i> Activate</button>
+        }
+      </form>
+
+    </div>
+
+
+
+}

@@ -25,8 +25,10 @@
 package models
 
 import org.joda.money.{ Money, CurrencyUnit }
-import models.JodaMoney._
-import java.util.NoSuchElementException
+import models.database.Accounts
+import play.api.db.slick.Config.driver.simple._
+import play.api.db.slick.DB.withSession
+import play.api.Play.current
 
 case class Account(id: Option[Long], organisationId: Option[Long], personId: Option[Long], currency: CurrencyUnit, active: Boolean) {
 
@@ -43,5 +45,21 @@ case class Account(id: Option[Long], organisationId: Option[Long], personId: Opt
   }
 
   def balance: Money = Money.of(currency, 0)
+}
+
+object Account {
+  def find(holder: AccountHolder): Account = withSession { implicit session ⇒
+    val query = holder match {
+      case o: Organisation ⇒ Query(Accounts).filter(_.organisationId === o.id)
+      case p: Person ⇒ Query(Accounts).filter(_.personId === p.id)
+      case Levy ⇒ Query(Accounts).filter(_.organisationId isNull).filter(_.personId isNull)
+    }
+    query.first()
+  }
+
+  def find(id: Long): Option[Account] = withSession { implicit session ⇒
+    Query(Accounts).filter(_.id === id).firstOption()
+
+  }
 }
 

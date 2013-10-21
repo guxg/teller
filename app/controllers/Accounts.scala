@@ -22,15 +22,20 @@
  * in writing Happy Melly One, Handelsplein 37, Rotterdam, The Netherlands, 3071 PR
  */
 
-package models
+package controllers
 
-trait AccountHolder {
-  def name: String
-  def account: Account = Account.find(this)
-  def levy: Boolean = false
-}
+import play.api.mvc.Controller
+import models.Account
+import models.UserRole.Role._
 
-object Levy extends AccountHolder {
-  def name = "HM Levy"
-  override def levy = true
+object Accounts extends Controller with Security {
+
+  def details(id: Long) = SecuredRestrictedAction(Viewer) { implicit request ⇒
+    implicit handler ⇒
+      Account.find(id).map(a ⇒ Ok(views.html.account.details(request.user, a))).getOrElse(NotFound)
+  }
+
+  def enable(id: Long) = TODO
+  def disable(id: Long) = TODO
+
 }
